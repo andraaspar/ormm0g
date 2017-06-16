@@ -2,6 +2,31 @@
 # yarn lockfile v1
 
 
+berek@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/berek/-/berek-5.0.0.tgz#1102dd895700c29c0413b3b872591525877ebf9e"
+  dependencies:
+    illa "^7.0.0"
+    jquery-ts "^2.1.1"
+
+illa@^7.0.0:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/illa/-/illa-7.0.1.tgz#622e09e892fe46946607c38566070b1bd3ce8a16"
+
+jquery-ts@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/jquery-ts/-/jquery-ts-2.1.1.tgz#df45325b6c128fa5deb32d84d3f761b671e6de92"
+  dependencies:
+    jquery "^3.0.0"
+
+jquery@^3.0.0:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
+
+lodash@^4.17.4:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+
 mithril@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/mithril/-/mithril-1.1.1.tgz#0c98644c90503eec2187f66a851ba4053c4a5d66"

@@ -5,6 +5,8 @@
   "license": "MIT",
   "flat": true,
   "dependencies": {
+    "berek": "^5.0.0",
+    "lodash": "^4.17.4",
     "mithril": "^1.1.1"
   }
 }
