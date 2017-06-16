@@ -1,0 +1,10 @@
+{
+  "name": "less",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "flat": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
