@@ -27,7 +27,7 @@
   },
   "scripts": {
     "installDeps": "yarn && cd src/less && yarn && cd ../ts && yarn && cd ../..",
-    "compile": "yarn run installDeps && webpack",
+    "compile": "yarn run installDeps && webpack --display-modules --display-chunks",
     "watch": "yarn run installDeps && webpack --watch --progress"
   }
 }

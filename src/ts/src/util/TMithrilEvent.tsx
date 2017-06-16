@@ -1,0 +1,1 @@
+export type TMithrilEvent<T> = T & { redraw?: boolean }

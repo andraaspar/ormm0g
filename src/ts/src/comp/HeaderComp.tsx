@@ -1,6 +1,10 @@
 import * as m from 'mithril'
 
 import { ClassComponent } from './ClassComponent'
+import { TMithrilEvent } from '../util/TMithrilEvent'
+import { booksServerSearch } from '../server/BooksServer'
+import { data } from '../data/data'
+import { throttle } from "illa/FunctionUtil";
 
 export interface IHeaderCompAttrs { }
 
@@ -16,13 +20,27 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
+						<a class="navbar-brand">Book Search</a>
+					</div>
+					<div class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Find books"
+								value={data.search.query}
+								oninput={oninput}
+							/>
+						</div>
+						{' '}
+						<button
+							type="button"
+							class="btn btn-default"
+							title="Search"
+							onclick={search}
+						>
+							<span className="glyphicon glyphicon-search" aria-hidden="true"></span>
 						</button>
-						<a class="navbar-brand">Book Search JSX</a>
 					</div>
 				</div>
 			</nav>
@@ -32,4 +50,29 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 	// onupdate(v: VnodeDOM) {}
 	// onbeforeremove(v: VnodeDOM) {}
 	// onremove(v: VnodeDOM) {}
+}
+
+function oninput(e: TMithrilEvent<Event>) {
+	data.search.query = (e.target as HTMLInputElement).value
+	search()
+}
+
+function search() {
+	if (data.search.xhr) {
+		data.search.xhr.abort()
+	}
+	data.search.response = undefined
+	loadSearchResultsThrottled()
+}
+
+const loadSearchResultsThrottled = throttle(loadSearchResults, null, 600)
+function loadSearchResults() {
+	if (data.search.query.length < 3) return
+	booksServerSearch(data.search.query, xhr => data.search.xhr = xhr)
+		.then(results => data.search.response = results)
+		.catch(e => {
+			data.search.response = undefined
+			data.search.messages.push(e + '')
+		})
+		.then(() => data.search.xhr = undefined)
 }

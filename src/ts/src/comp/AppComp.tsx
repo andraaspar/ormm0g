@@ -16,6 +16,7 @@ export class AppComp extends ClassComponent<IAppCompAttrs> {
 		return (
 			<div class="container-fluid">
 				<HeaderComp/>
+				{v.children}
 			</div>
 		)
 	}

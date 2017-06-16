@@ -4,6 +4,10 @@ import * as m from 'mithril'
 
 import { AppComp } from './comp/AppComp'
 import { GLOBAL } from 'illa/GLOBAL'
+import { IndexPage } from './page/IndexPage'
 
 GLOBAL.m = m
-m.mount(document.getElementById('app')!, AppComp)
+
+m.route(document.getElementById('app'), '/', {
+	'/': IndexPage
+})

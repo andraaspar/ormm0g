@@ -12,7 +12,8 @@
 		"jsx": "preserve",
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
-		"noImplicitThis": true
+		"noImplicitThis": true,
+		"allowSyntheticDefaultImports": true
 	},
 	"exclude": [
 		"node_modules"

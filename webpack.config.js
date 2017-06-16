@@ -7,16 +7,16 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const extractLess = new ExtractTextPlugin({
-	filename: 'style/[name].[contenthash].css',
+	filename: '[name].[contenthash].css',
 })
 
 module.exports = {
 	entry: {
-		main: './src/ts/src/main.ts',
+		main: './src/ts/src/main.tsx',
 	},
 	output: {
 		path: path.resolve('./build'),
-		filename: 'script/[name].[chunkhash].js',
+		filename: '[name].[chunkhash].js',
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -34,16 +34,12 @@ module.exports = {
 				test: /\.(woff|woff2|eot|ttf|otf)$|glyphicons-halflings-regular.svg$/,
 				loader: 'file-loader',
 				options: {
-					name: 'style/fonts/[name].[hash].[ext]',
+					name: '[name].[hash].[ext]',
 				},
 			},
 			{
 				test: /\.less$/i,
 				use: extractLess.extract(['css-loader', 'less-loader']),
-			},
-			{
-				test: /\.hbs$/i,
-				use: ['handlebars-loader'],
 			},
 		]
 	},
