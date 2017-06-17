@@ -13,7 +13,7 @@ export function search() {
 	abortSearch()
 	data.search.response = undefined
 	if (data.search.query.length < 3) return
-	booksServerSearch(data.search.query, xhr => data.search.xhr = xhr)
+	booksServerSearch(data.search.query, data.search.page, xhr => data.search.xhr = xhr)
 		.then(results => {
 			data.search.response = results
 		})

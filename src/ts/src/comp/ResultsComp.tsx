@@ -1,9 +1,11 @@
 import * as m from 'mithril'
 
 import { ClassComponent } from './ClassComponent'
+import { PagingComp } from './PagingComp'
 import { Volume } from '../data/Volume'
 import { data } from '../data/data'
 import { get } from '../util/MithrilUtil'
+import { goToIndexPage } from '../main'
 
 export interface IResultsCompAttrs { }
 
@@ -58,7 +60,13 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 											</div>
 										</div>
 									</div>
-								))
+								)),
+								(<PagingComp
+									_value={data.search.page}
+									_lastValue={Math.ceil(data.search.response.totalItems / 10)}
+									_setter={setPage}
+									_noLast={true /* Result count changes between pages, last page is informative only. */}
+								/>)
 							]
 							:
 							<p class="text-center"><em>No results.</em></p>
@@ -74,4 +82,8 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 	// onupdate(v: VnodeDOM) {}
 	// onbeforeremove(v: VnodeDOM) {}
 	// onremove(v: VnodeDOM) {}
+}
+
+function setPage(page: number) {
+	goToIndexPage({ page })
 }
