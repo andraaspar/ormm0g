@@ -22,7 +22,7 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<a class="navbar-brand">Book Search</a>
+						<a href="#" class="navbar-brand">Book Search</a>
 					</div>
 					<div class="navbar-form navbar-right" role="search">
 						<div class="form-group">

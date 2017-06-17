@@ -4,6 +4,7 @@ import * as m from 'mithril'
 
 import { GLOBAL } from 'illa/GLOBAL'
 import { IndexPage } from './page/IndexPage'
+import { VolumeDetailsPage } from './page/VolumeDetailsPage'
 import { data } from './data/data'
 
 GLOBAL.m = m
@@ -12,10 +13,14 @@ const ROUTE_ROOT = '/'
 const ROUTE_QUERY = '/search/:query'
 const ROUTE_QUERY_PAGE = '/search/:query/page/:page'
 
+const ROUTE_VOLUME_DETAILS = '/volume-details/:volumeId'
+
 m.route(document.getElementById('app'), ROUTE_ROOT, {
 	[ROUTE_ROOT]: IndexPage,
 	[ROUTE_QUERY]: IndexPage,
 	[ROUTE_QUERY_PAGE]: IndexPage,
+	
+	[ROUTE_VOLUME_DETAILS]: VolumeDetailsPage,
 })
 
 export function goToIndexPage({ query = data.search.query, page = data.search.page }) {
@@ -28,4 +33,12 @@ export function goToIndexPage({ query = data.search.query, page = data.search.pa
 	} else {
 		m.route.set(ROUTE_ROOT)
 	}
+}
+
+export function goToVolumeDetailsPage(volumeId: string) {
+	m.route.set(ROUTE_VOLUME_DETAILS, { volumeId: encodeURIComponent(volumeId) })
+}
+
+export function getVolumeDetailsPageLink(volumeId: string) {
+	return '#!' + ROUTE_VOLUME_DETAILS.replace(/:volumeId/, encodeURIComponent(volumeId))
 }

@@ -1,23 +1,21 @@
 import * as m from 'mithril'
 
 import { ClassComponent } from './ClassComponent'
-import { HeaderComp } from './HeaderComp'
 
-export interface IAppCompAttrs { }
+export interface INoResultsCompAttrs {
+	_message: m.Children
+}
 
-type Vnode = m.CVnode<IAppCompAttrs>
-type VnodeDOM = m.CVnodeDOM<IAppCompAttrs>
+type Vnode = m.CVnode<INoResultsCompAttrs>
+type VnodeDOM = m.CVnodeDOM<INoResultsCompAttrs>
 
-export class AppComp extends ClassComponent<IAppCompAttrs> {
+export class NoResultsComp extends ClassComponent<INoResultsCompAttrs> {
 
 	// oninit(v: Vnode) {}
 	// onbeforeupdate(v: Vnode, o: VnodeDOM) {}
 	view(v: Vnode) {
 		return (
-			<div class="container">
-				<HeaderComp/>
-				{v.children}
-			</div>
+			<p class="text-center"><em>{v.attrs._message}</em></p>
 		)
 	}
 	// oncreate(v: VnodeDOM) {}
