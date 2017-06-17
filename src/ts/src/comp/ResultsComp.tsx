@@ -3,6 +3,7 @@ import * as m from 'mithril'
 import { getVolumeDetailsPageLink, goToIndexPage } from '../main'
 
 import { ClassComponent } from './ClassComponent'
+import { MessagesComp } from './MessagesComp'
 import { NoResultsComp } from './NoResultsComp'
 import { PagingComp } from './PagingComp'
 import { ProgressComp } from './ProgressComp'
@@ -25,48 +26,51 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 				{(data.search.xhr ?
 					<ProgressComp />
 					:
-					(data.search.response ?
-						(data.search.response.totalItems ?
-							[
-								(<p>Results: {data.search.response.totalItems}</p>),
-								get(() => !!data.search.response.items.length) &&
-								data.search.response.items.map(volume => (
-									<div class="well">
-										<h4>
-											<a href={getVolumeDetailsPageLink(volume.id)}>
-												{volume.volumeInfo.title}
-											</a>
-										</h4>
-										<div>
-											{get<m.Children>(() => m.trust(volume.searchInfo.textSnippet), () => m.trust(volume.volumeInfo.description))}
-										</div>
-										<br/>
-										<p>
-											<button
-												type="button"
-												class="btn btn-success"
-											>
-												{get(() => volume.saleInfo.retailPrice) &&
-													formatPrice(volume.saleInfo.retailPrice.amount, volume.saleInfo.retailPrice.currencyCode) + ` – `
-												}
-												Add to cart
+					[
+						<MessagesComp _messages={data.search.messages}/>,
+						(data.search.response ?
+							(data.search.response.totalItems ?
+								[
+									(<p>Results: {data.search.response.totalItems}</p>),
+									get(() => !!data.search.response.items.length) &&
+									data.search.response.items.map(volume => (
+										<div class="well">
+											<h4>
+												<a href={getVolumeDetailsPageLink(volume.id)}>
+													{volume.volumeInfo.title}
+												</a>
+											</h4>
+											<div>
+												{get<m.Children>(() => m.trust(volume.searchInfo.textSnippet), () => m.trust(volume.volumeInfo.description))}
+											</div>
+											<br />
+											<p>
+												<button
+													type="button"
+													class="btn btn-success"
+												>
+													{get(() => volume.saleInfo.retailPrice) &&
+														formatPrice(volume.saleInfo.retailPrice.amount, volume.saleInfo.retailPrice.currencyCode) + ` – `
+													}
+													Add to cart
 											</button>
-										</p>
-									</div>
-								)),
-								(<PagingComp
-									_value={data.search.page}
-									_lastValue={Math.ceil(data.search.response.totalItems / 10)}
-									_setter={setPage}
-									_noLast={true /* Result count changes between pages, last page is informative only. */}
-								/>)
-							]
+											</p>
+										</div>
+									)),
+									(<PagingComp
+										_value={data.search.page}
+										_lastValue={Math.ceil(data.search.response.totalItems / 10)}
+										_setter={setPage}
+										_noLast={true /* Result count changes between pages, last page is informative only. */}
+									/>)
+								]
+								:
+								<NoResultsComp _message="No results." />
+							)
 							:
-							<NoResultsComp _message="No results." />
+							<NoResultsComp _message="Specify a query to start searching." />
 						)
-						:
-						<NoResultsComp _message="Specify a query to start searching." />
-					)
+					]
 				)}
 			</div>
 		)

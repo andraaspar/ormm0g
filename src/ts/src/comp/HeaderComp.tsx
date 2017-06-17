@@ -22,7 +22,7 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<a href="#" class="navbar-brand">Book Search</a>
+						<a href="#" class="navbar-brand">The Book Shop</a>
 					</div>
 					<div class="navbar-form navbar-right" role="search">
 						<div class="form-group">
@@ -42,7 +42,7 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 							title="Search"
 							onclick={onSearchRequested}
 						>
-							<span className="glyphicon glyphicon-search" aria-hidden="true"></span>
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 						</button>
 					</div>
 				</div>
@@ -60,7 +60,7 @@ function onSearchRequested(e: TMithrilEvent<Event>) {
 	e.redraw = false
 	// Let search update data first
 	search()
-	goToIndexPage({})
+	goToIndexPage({ page: 1 })
 }
 
 function onQueryInput(e: TMithrilEvent<Event>) {

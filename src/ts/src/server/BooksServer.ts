@@ -27,3 +27,8 @@ export function booksServerGetVolume(volumeId: string, saveXhr?: (xhr: XMLHttpRe
 		config: saveXhr,
 	})
 }
+
+export function handleXhrError(xhr: XMLHttpRequest, messages: string[], e: any) {
+	messages.push(`Error while loading data: ${xhr.status} ${xhr.statusText} – ${e}. Check your connection and try again.`)
+	console.error(e)
+}

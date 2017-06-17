@@ -1,4 +1,5 @@
-import { booksServerSearchByTitle } from '../server/BooksServer'
+import { booksServerSearchByTitle, handleXhrError } from '../server/BooksServer'
+
 import { data } from './data'
 import debounce from 'lodash/debounce'
 
@@ -19,9 +20,7 @@ export function search() {
 			data.search.response = results
 		})
 		.catch(e => {
-			data.search.response = undefined
-			data.search.messages.push(e + '')
-			console.error(e)
+			handleXhrError(data.search.xhr, data.search.messages, e)
 		})
 		.then(() => {
 			data.search.xhr = undefined

@@ -2,6 +2,7 @@ import * as m from 'mithril'
 
 import { AppComp } from '../comp/AppComp'
 import { ClassComponent } from '../comp/ClassComponent'
+import { MessagesComp } from '../comp/MessagesComp'
 import { NoResultsComp } from '../comp/NoResultsComp'
 import { ProgressComp } from '../comp/ProgressComp'
 import { data } from '../data/data'
@@ -28,50 +29,55 @@ export class VolumeDetailsPage extends ClassComponent<IVolumeDetailsPageAttrs> {
 					(data.volumeDetails.xhr ?
 						<ProgressComp />
 						:
-						(volume ?
-							<div class="row">
-								<div class="col-sm-4 col-md-3 col-lg-2">
-									{
-										get(() => volume.volumeInfo.imageLinks.smallThumbnail) ?
-										<img class="img-responsive center-block" src={data.volumeDetails.volume.volumeInfo.imageLinks.smallThumbnail} alt={`Cover image of ${volume.volumeInfo.title}`} />
-										:
-										<NoResultsComp _message="Cover not found."/>
-									}
-								</div>
-								<div class="col-sm-8 col-md-9 col-lg-10">
-									<h2>
-										{volume.volumeInfo.title}
-										{volume.volumeInfo.subtitle &&
-											<span>
-												<br />
-												<small>{volume.volumeInfo.subtitle}</small>
-											</span>
+						[
+							<MessagesComp _messages={data.volumeDetails.messages}/>,
+							(volume ?
+								<div class="row">
+									<div class="col-sm-4 col-md-3 col-lg-2">
+										{
+											get(() => volume.volumeInfo.imageLinks.smallThumbnail) ?
+												<div class="thumbnail">
+													<img src={data.volumeDetails.volume.volumeInfo.imageLinks.smallThumbnail} alt={`Cover image of ${volume.volumeInfo.title}`} />
+												</div>
+												:
+												<NoResultsComp _message="Cover not found." />
 										}
-									</h2>
-									{
-										get(() => !!volume.volumeInfo.authors.length) &&
-										<p>Authors: {volume.volumeInfo.authors.join(', ')}</p>
-									}
-									<div>
-										{get(() => m.trust(volume.volumeInfo.description))}
 									</div>
-									<br />
-									<p>
-										<button
-											type="button"
-											class="btn btn-success"
-										>
-											{get(() => volume.saleInfo.retailPrice) &&
-												formatPrice(volume.saleInfo.retailPrice.amount, volume.saleInfo.retailPrice.currencyCode) + ` – `
+									<div class="col-sm-8 col-md-9 col-lg-10">
+										<h2>
+											{volume.volumeInfo.title}
+											{volume.volumeInfo.subtitle &&
+												<span>
+													<br />
+													<small>{volume.volumeInfo.subtitle}</small>
+												</span>
 											}
-											Add to cart
+										</h2>
+										{
+											get(() => !!volume.volumeInfo.authors.length) &&
+											<p>{volume.volumeInfo.authors.length > 1 ? `Authors` : `Author`}: {volume.volumeInfo.authors.join(', ')}</p>
+										}
+										<div>
+											{get(() => m.trust(volume.volumeInfo.description))}
+										</div>
+										<br />
+										<p>
+											<button
+												type="button"
+												class="btn btn-success"
+											>
+												{get(() => volume.saleInfo.retailPrice) &&
+													formatPrice(volume.saleInfo.retailPrice.amount, volume.saleInfo.retailPrice.currencyCode) + ` – `
+												}
+												Add to cart
 										</button>
-									</p>
+										</p>
+									</div>
 								</div>
-							</div>
-							:
-							<NoResultsComp _message="Volume not found." />
-						)
+								:
+								<NoResultsComp _message="Volume not found." />
+							)
+						]
 					)
 				}
 			</AppComp>
