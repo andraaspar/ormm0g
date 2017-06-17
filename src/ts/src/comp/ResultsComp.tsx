@@ -38,7 +38,7 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 											</a>
 										</h4>
 										<div>
-											{get<m.Children>(() => m.trust(volume.searchInfo.textSnippet), () => volume.volumeInfo.description)}
+											{get<m.Children>(() => m.trust(volume.searchInfo.textSnippet), () => m.trust(volume.volumeInfo.description))}
 										</div>
 										<br/>
 										<p>

@@ -53,7 +53,7 @@ export class VolumeDetailsPage extends ClassComponent<IVolumeDetailsPageAttrs> {
 										<p>Authors: {volume.volumeInfo.authors.join(', ')}</p>
 									}
 									<div>
-										{get(() => volume.volumeInfo.description)}
+										{get(() => m.trust(volume.volumeInfo.description))}
 									</div>
 									<br />
 									<p>
