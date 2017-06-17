@@ -43,10 +43,10 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 											<h4 class="media-heading">
 												{volume.volumeInfo.title}
 												{volume.volumeInfo.subtitle &&
-													[
-														(<br />),
-														(<small>{volume.volumeInfo.subtitle}</small>),
-													]
+													<span>
+														<br />
+														<small>{volume.volumeInfo.subtitle}</small>
+													</span>
 												}
 											</h4>
 											{

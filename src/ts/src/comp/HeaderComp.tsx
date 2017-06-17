@@ -1,10 +1,12 @@
 import * as m from 'mithril'
 
+import { abortSearch, search } from '../data/SearchMethods'
+
 import { ClassComponent } from './ClassComponent'
 import { TMithrilEvent } from '../util/TMithrilEvent'
-import { booksServerSearch } from '../server/BooksServer'
 import { data } from '../data/data'
-import { throttle } from "illa/FunctionUtil";
+import debounce from 'lodash/debounce'
+import { goToIndexPage } from '../main'
 
 export interface IHeaderCompAttrs { }
 
@@ -29,7 +31,8 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 								class="form-control"
 								placeholder="Find books"
 								value={data.search.query}
-								oninput={oninput}
+								onkeydown={onQueryKeyDown}
+								oninput={onQueryInput}
 							/>
 						</div>
 						{' '}
@@ -37,7 +40,7 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 							type="button"
 							class="btn btn-default"
 							title="Search"
-							onclick={search}
+							onclick={onSearchRequested}
 						>
 							<span className="glyphicon glyphicon-search" aria-hidden="true"></span>
 						</button>
@@ -52,27 +55,37 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 	// onremove(v: VnodeDOM) {}
 }
 
-function oninput(e: TMithrilEvent<Event>) {
-	data.search.query = (e.target as HTMLInputElement).value
+function onSearchRequested(e: TMithrilEvent<Event>) {
+	// Prevent redraw, as page change will trigger a redraw anyway
+	e.redraw = false
+	// Let search update data first
 	search()
+	goToIndexPage({})
 }
 
-function search() {
-	if (data.search.xhr) {
-		data.search.xhr.abort()
+function onQueryInput(e: TMithrilEvent<Event>) {
+	// Redraw must happen to update after data change, but we don't need to
+	// check the hash as it will be certainly different and we don't want to
+	// search just yet
+	data.noHashCheck = true
+	data.search.query = (e.target as HTMLInputElement).value || ''
+	abortSearch()
+	onQueryInputDebounced()
+}
+
+const onQueryInputDebounced = debounce(onQueryInputInternal, 600)
+function onQueryInputInternal() {
+	// Search first as page change will trigger redraw
+	search()
+	goToIndexPage({ page: 1 })
+}
+
+function onQueryKeyDown(e: TMithrilEvent<KeyboardEvent>) {
+	// We don't change the data here – no need to redraw
+	e.redraw = false
+	switch (e.key) {
+		case 'Enter':
+			onSearchRequested(e)
+			break
 	}
-	data.search.response = undefined
-	loadSearchResultsThrottled()
-}
-
-const loadSearchResultsThrottled = throttle(loadSearchResults, null, 600)
-function loadSearchResults() {
-	if (data.search.query.length < 3) return
-	booksServerSearch(data.search.query, xhr => data.search.xhr = xhr)
-		.then(results => data.search.response = results)
-		.catch(e => {
-			data.search.response = undefined
-			data.search.messages.push(e + '')
-		})
-		.then(() => data.search.xhr = undefined)
 }

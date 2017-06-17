@@ -2,12 +2,30 @@ import '../../less/src/style.less'
 
 import * as m from 'mithril'
 
-import { AppComp } from './comp/AppComp'
 import { GLOBAL } from 'illa/GLOBAL'
 import { IndexPage } from './page/IndexPage'
+import { data } from './data/data'
 
 GLOBAL.m = m
 
-m.route(document.getElementById('app'), '/', {
-	'/': IndexPage
+const ROUTE_ROOT = '/'
+const ROUTE_QUERY = '/:query'
+const ROUTE_QUERY_PAGE = '/:query/:page'
+
+m.route(document.getElementById('app'), ROUTE_ROOT, {
+	[ROUTE_ROOT]: IndexPage,
+	[ROUTE_QUERY]: IndexPage,
+	[ROUTE_QUERY_PAGE]: IndexPage,
 })
+
+export function goToIndexPage({ query = data.search.query, page = data.search.page }) {
+	if (query) {
+		if (page == 1) {
+			m.route.set(ROUTE_QUERY, { query: encodeURIComponent(query) })
+		} else {
+			m.route.set(ROUTE_QUERY_PAGE, { query: encodeURIComponent(query), page })
+		}
+	} else {
+		m.route.set(ROUTE_ROOT)
+	}
+}
