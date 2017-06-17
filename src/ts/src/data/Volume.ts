@@ -21,6 +21,12 @@ export class Volume {
 				extraLarge: string
 			}
 		},
+		public saleInfo: {
+			retailPrice: {
+				amount: number
+				currencyCode: string
+			}
+		},
 		public searchInfo: {
 			textSnippet: string
 		},

@@ -1,4 +1,4 @@
-import { booksServerSearch } from '../server/BooksServer'
+import { booksServerSearchByTitle } from '../server/BooksServer'
 import { data } from './data'
 import debounce from 'lodash/debounce'
 
@@ -13,7 +13,7 @@ export function search() {
 	abortSearch()
 	data.search.response = undefined
 	if (data.search.query.length < 3) return
-	booksServerSearch(data.search.query, data.search.page, xhr => data.search.xhr = xhr)
+	booksServerSearchByTitle(data.search.query, data.search.page, xhr => data.search.xhr = xhr)
 		.then(results => {
 			data.search.response = results
 		})

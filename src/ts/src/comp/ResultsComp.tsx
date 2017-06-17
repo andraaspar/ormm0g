@@ -34,10 +34,10 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 								data.search.response.items.map(volume => (
 									<div class="media">
 										{
-											get(() => volume.volumeInfo.imageLinks.thumbnail) &&
+											get(() => volume.volumeInfo.imageLinks.smallThumbnail) &&
 											<div class="media-left">
 												<a href="#">
-													<img class="media-object" src={volume.volumeInfo.imageLinks.thumbnail} alt={`Cover image of ${volume.volumeInfo.title}`} />
+													<img class="media-object" src={volume.volumeInfo.imageLinks.smallThumbnail} alt={`Cover image of ${volume.volumeInfo.title}`} />
 												</a>
 											</div>
 										}
@@ -58,6 +58,18 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 											<div>
 												{get<m.Children>(() => m.trust(volume.searchInfo.textSnippet), () => volume.volumeInfo.description)}
 											</div>
+											<br />
+											<p>
+												<button
+													type="button"
+													class="btn btn-success"
+												>
+													{get(() => volume.saleInfo.retailPrice) &&
+														formatPrice(volume.saleInfo.retailPrice.amount, volume.saleInfo.retailPrice.currencyCode) + ` – `
+													}
+													Add to cart
+												</button>
+											</p>
 										</div>
 									</div>
 								)),
@@ -86,4 +98,12 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 
 function setPage(page: number) {
 	goToIndexPage({ page })
+}
+
+function formatPrice(amount: number, currency: string) {
+	return get(() => amount.toLocaleString(getLocale(), { style: 'currency', currency, currencyDisplay: 'symbol' }), () => amount + '')
+}
+
+function getLocale() {
+	return (navigator.language || (navigator as any).userLanguage || (navigator as any).browserLanguage || (navigator as any).systemLanguage) + ''
 }
