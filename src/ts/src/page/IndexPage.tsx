@@ -40,11 +40,13 @@ function checkHash(v: Vnode) {
 		data.noHashCheck = false
 		return
 	}
-	let queryMatches = v.attrs.query == data.search.query
-	let pageMatches = (!v.attrs.page && data.search.page == 1) || (parseInt(v.attrs.page) == data.search.page)
+	let query = v.attrs.query || ''
+	let page = parseInt(v.attrs.page) || 1
+	let queryMatches = query == data.search.query
+	let pageMatches = page == data.search.page
 	let isChanged = !queryMatches || !pageMatches
-	data.search.query = v.attrs.query || ''
-	data.search.page = parseInt(v.attrs.page) || 1
+	data.search.query = query
+	data.search.page = page
 	if (isChanged) {
 		search()
 		// Mithril 1.1.1 issue: no redraw when called from oncreate

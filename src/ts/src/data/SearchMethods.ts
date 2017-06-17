@@ -12,6 +12,7 @@ export function abortSearch() {
 export function search() {
 	abortSearch()
 	data.search.response = undefined
+	data.search.messages = []
 	if (data.search.query.length < 3) return
 	booksServerSearchByTitle(data.search.query, data.search.page, xhr => data.search.xhr = xhr)
 		.then(results => {
@@ -20,6 +21,7 @@ export function search() {
 		.catch(e => {
 			data.search.response = undefined
 			data.search.messages.push(e + '')
+			console.error(e)
 		})
 		.then(() => {
 			data.search.xhr = undefined
