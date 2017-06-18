@@ -20,7 +20,7 @@ export class CartItemComp extends ClassComponent<ICartItemCompAttrs> {
 	view(v: Vnode) {
 		return (
 			<div class="well">
-				<VolumeComp _volume={v.attrs._item.volume}/>
+				<VolumeComp _volume={v.attrs._item.volume} _link={true}/>
 			</div>
 		)
 	}

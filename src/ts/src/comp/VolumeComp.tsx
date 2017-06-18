@@ -2,13 +2,16 @@ import * as m from 'mithril'
 
 import { AddToCartButtonComp } from './AddToCartButtonComp'
 import { ClassComponent } from './ClassComponent'
+import { OptionalLinkComp } from './OptionalLinkComp'
 import { ProgressComp } from './ProgressComp'
 import { Volume } from '../data/Volume'
 import { VolumeThumbnailComp } from './VolumeThumbnailComp'
 import { get } from '../util/MithrilUtil'
+import { getVolumeDetailsPageLink } from '../main'
 
 export interface IVolumeCompAttrs {
 	_volume: Volume
+	_link?: boolean
 }
 
 type Vnode = m.CVnode<IVolumeCompAttrs>
@@ -22,19 +25,23 @@ export class VolumeComp extends ClassComponent<IVolumeCompAttrs> {
 		return (
 			<div class="row">
 				<div class="col-sm-4 col-md-3 col-lg-2">
-					<VolumeThumbnailComp class="img-responsive center-block img-thumbnail" _volume={v.attrs._volume} />
+					<OptionalLinkComp _href={v.attrs._link ? getVolumeDetailsPageLink(get(() => v.attrs._volume.id)) : undefined}>
+						<VolumeThumbnailComp class="img-responsive center-block img-thumbnail" _volume={v.attrs._volume} />
+					</OptionalLinkComp>
 				</div>
 				<div class="col-sm-8 col-md-9 col-lg-10">
 					{
 						(get<m.Children>(() => v.attrs._volume.volumeInfo.title) ?
 							<h2>
-								{v.attrs._volume.volumeInfo.title}
-								{v.attrs._volume.volumeInfo.subtitle &&
-									<span>
-										<br />
-										<small>{v.attrs._volume.volumeInfo.subtitle}</small>
-									</span>
-								}
+								<OptionalLinkComp _href={v.attrs._link ? getVolumeDetailsPageLink(get(() => v.attrs._volume.id)) : undefined}>
+									{v.attrs._volume.volumeInfo.title}
+									{v.attrs._volume.volumeInfo.subtitle &&
+										<span>
+											<br />
+											<small>{v.attrs._volume.volumeInfo.subtitle}</small>
+										</span>
+									}
+								</OptionalLinkComp>
 							</h2>
 							:
 							<ProgressComp />

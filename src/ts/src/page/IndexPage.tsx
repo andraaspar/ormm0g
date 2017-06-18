@@ -3,6 +3,7 @@ import * as m from 'mithril'
 import { AppComp } from '../comp/AppComp'
 import { ClassComponent } from '../comp/ClassComponent'
 import { ResultsComp } from '../comp/ResultsComp'
+import { SITE_TITLE_SUFFIX } from '../main'
 import { data } from '../data/data'
 import { search } from '../data/SearchMethods'
 
@@ -36,12 +37,15 @@ export class IndexPage extends ClassComponent<IIndexPageAttrs> {
 }
 
 function checkHash(v: Vnode) {
+	let query = v.attrs.query || ''
+	let page = parseInt(v.attrs.page) || 1
+	
+	document.title = (query ? `Search for ‘${query}’ page ${page}` : 'Home') + SITE_TITLE_SUFFIX
+	
 	if (data.noHashCheck) {
 		data.noHashCheck = false
 		return
 	}
-	let query = v.attrs.query || ''
-	let page = parseInt(v.attrs.page) || 1
 	let queryMatches = query == data.search.query
 	let pageMatches = page == data.search.page
 	let isChanged = !queryMatches || !pageMatches

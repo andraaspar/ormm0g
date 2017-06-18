@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
+import { SITE_TITLE, getCartPageLink, goToIndexPage } from '../main'
 import { abortSearch, search } from '../data/SearchMethods'
-import { getCartPageLink, goToIndexPage } from '../main'
 
 import { ClassComponent } from './ClassComponent'
 import { TMithrilEvent } from '../util/TMithrilEvent'
@@ -23,7 +23,7 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<a href="#" class="navbar-brand">The Book Shop</a>
+						<a href="#" class="navbar-brand">{SITE_TITLE}</a>
 					</div>
 					<div class="navbar-right">
 						<div class="navbar-form" role="search">
@@ -53,7 +53,7 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 							<li>
 								<a
 									href={getCartPageLink()}
-									title={`Cart: ${data.cart.items.length} ${data.cart.items.length == 1 ? `item` : `items`}`}
+									title={`Shopping cart: ${data.cart.items.length} ${data.cart.items.length == 1 ? `item` : `items`}`}
 								>
 									<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 									{' '}

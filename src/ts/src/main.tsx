@@ -19,6 +19,9 @@ const ROUTE_VOLUME_DETAILS = '/volume-details/:volumeId'
 
 const ROUTE_CART = '/cart'
 
+export const SITE_TITLE = 'The Book Shop'
+export const SITE_TITLE_SUFFIX = ` | ${SITE_TITLE}`
+
 restoreCart()
 
 m.route(document.getElementById('app'), ROUTE_ROOT, {

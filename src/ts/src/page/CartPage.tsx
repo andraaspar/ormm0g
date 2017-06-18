@@ -8,6 +8,7 @@ import { CartItemComp } from '../comp/CartItemComp'
 import { ClassComponent } from '../comp/ClassComponent'
 import { NoResultsComp } from '../comp/NoResultsComp'
 import { ProgressComp } from '../comp/ProgressComp'
+import { SITE_TITLE_SUFFIX } from '../main'
 import { VolumeThumbnailComp } from '../comp/VolumeThumbnailComp'
 import { data } from '../data/data'
 import { formatPrice } from '../util/NumberUtil'
@@ -46,12 +47,14 @@ export class CartPage extends ClassComponent<ICartPageAttrs> {
 						</div>
 					]
 					:
-					<NoResultsComp _message="There are no items in the cart." />
+					<NoResultsComp _message="There are no items in the shopping cart." />
 				)}
 			</AppComp>
 		)
 	}
-	// oncreate(v: VnodeDOM) {}
+	oncreate(v: VnodeDOM) {
+		document.title = 'Shopping cart' + SITE_TITLE_SUFFIX
+	}
 	// onupdate(v: VnodeDOM) {}
 	// onbeforeremove(v: VnodeDOM) {}
 	// onremove(v: VnodeDOM) {}

@@ -5,6 +5,7 @@ import { ClassComponent } from '../comp/ClassComponent'
 import { MessagesComp } from '../comp/MessagesComp'
 import { NoResultsComp } from '../comp/NoResultsComp'
 import { ProgressComp } from '../comp/ProgressComp'
+import { SITE_TITLE_SUFFIX } from '../main'
 import { VolumeComp } from '../comp/VolumeComp'
 import { data } from '../data/data'
 import { get } from '../util/MithrilUtil'
@@ -53,6 +54,9 @@ export class VolumeDetailsPage extends ClassComponent<IVolumeDetailsPageAttrs> {
 }
 
 function checkHash(v: Vnode) {
+	let title = get(() => data.volumeDetails.volume.volumeInfo.title)
+	document.title = (title ? `Details of ‘${title}’` : 'Details of volume') + SITE_TITLE_SUFFIX
+	
 	if (data.noHashCheck) {
 		data.noHashCheck = false
 		return
