@@ -13,7 +13,7 @@ export function requestVolumeDetails() {
 	abortVolumeDetailsRequest()
 	data.volumeDetails.volume = undefined
 	data.volumeDetails.messages = []
-	booksServerGetVolume(data.volumeDetails.volumeId, xhr => data.volumeDetails.xhr = xhr)
+	booksServerGetVolume(data.volumeDetails.volumeId, 'full', xhr => data.volumeDetails.xhr = xhr)
 		.then(volume => {
 			data.volumeDetails.volume = volume
 		})

@@ -1,12 +1,13 @@
 import * as m from 'mithril'
 
 import { abortSearch, search } from '../data/SearchMethods'
+import { getCartPageLink, goToIndexPage } from '../main'
 
 import { ClassComponent } from './ClassComponent'
 import { TMithrilEvent } from '../util/TMithrilEvent'
 import { data } from '../data/data'
 import debounce from 'lodash/debounce'
-import { goToIndexPage } from '../main'
+import { getCartItemQuantitiesSum } from '../data/CartMethods'
 
 export interface IHeaderCompAttrs { }
 
@@ -24,26 +25,42 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 					<div class="navbar-header">
 						<a href="#" class="navbar-brand">The Book Shop</a>
 					</div>
-					<div class="navbar-form navbar-right" role="search">
-						<div class="form-group">
-							<input
-								type="text"
-								class="form-control"
-								placeholder="Find books"
-								value={data.search.query}
-								onkeydown={onQueryKeyDown}
-								oninput={onQueryInput}
-							/>
+					<div class="navbar-right">
+						<div class="navbar-form" role="search">
+							<div class="form-group">
+								<input
+									type="text"
+									class="form-control"
+									placeholder="Find books"
+									value={data.search.query}
+									onkeydown={onQueryKeyDown}
+									oninput={onQueryInput}
+								/>
+							</div>
+							{' '}
+							<button
+								type="button"
+								class="btn btn-default"
+								title="Search"
+								onclick={onSearchRequested}
+							>
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							</button>
 						</div>
-						{' '}
-						<button
-							type="button"
-							class="btn btn-default"
-							title="Search"
-							onclick={onSearchRequested}
-						>
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-						</button>
+					</div>
+					<div class="navbar-right">
+						<ul class="nav navbar-nav">
+							<li>
+								<a
+									href={getCartPageLink()}
+									title={`Cart: ${data.cart.items.length} ${data.cart.items.length == 1 ? `item` : `items`}`}
+								>
+									<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+									{' '}
+									<span class="badge">{getCartItemQuantitiesSum()}</span>
+								</a>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</nav>

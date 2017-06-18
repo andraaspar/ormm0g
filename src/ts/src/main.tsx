@@ -2,10 +2,12 @@ import '../../less/src/style.less'
 
 import * as m from 'mithril'
 
+import { CartPage } from './page/CartPage'
 import { GLOBAL } from 'illa/GLOBAL'
 import { IndexPage } from './page/IndexPage'
 import { VolumeDetailsPage } from './page/VolumeDetailsPage'
 import { data } from './data/data'
+import { restoreCart } from './data/CartMethods'
 
 GLOBAL.m = m
 
@@ -15,12 +17,18 @@ const ROUTE_QUERY_PAGE = '/search/:query/page/:page'
 
 const ROUTE_VOLUME_DETAILS = '/volume-details/:volumeId'
 
+const ROUTE_CART = '/cart'
+
+restoreCart()
+
 m.route(document.getElementById('app'), ROUTE_ROOT, {
 	[ROUTE_ROOT]: IndexPage,
 	[ROUTE_QUERY]: IndexPage,
 	[ROUTE_QUERY_PAGE]: IndexPage,
 	
 	[ROUTE_VOLUME_DETAILS]: VolumeDetailsPage,
+	
+	[ROUTE_CART]: CartPage,
 })
 
 export function goToIndexPage({ query = data.search.query, page = data.search.page }) {
@@ -41,4 +49,8 @@ export function goToVolumeDetailsPage(volumeId: string) {
 
 export function getVolumeDetailsPageLink(volumeId: string) {
 	return '#!' + ROUTE_VOLUME_DETAILS.replace(/:volumeId/, encodeURIComponent(volumeId))
+}
+
+export function getCartPageLink() {
+	return '#!' + ROUTE_CART
 }

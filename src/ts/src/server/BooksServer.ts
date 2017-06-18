@@ -18,10 +18,11 @@ export function booksServerSearchByTitle(query: string, page: number, saveXhr?: 
 	})
 }
 
-export function booksServerGetVolume(volumeId: string, saveXhr?: (xhr: XMLHttpRequest) => any) {
+export function booksServerGetVolume(volumeId: string, projection: 'full' | 'lite', saveXhr?: (xhr: XMLHttpRequest) => any) {
 	return m.request<Volume>({
 		url: `https://www.googleapis.com/books/v1/volumes/${encodeURIComponent(volumeId)}`,
 		data: {
+			projection,
 			key: BOOKS_API_KEY,
 		},
 		config: saveXhr,

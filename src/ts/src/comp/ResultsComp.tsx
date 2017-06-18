@@ -2,13 +2,13 @@ import * as m from 'mithril'
 
 import { getVolumeDetailsPageLink, goToIndexPage } from '../main'
 
+import { AddToCartButtonComp } from './AddToCartButtonComp'
 import { ClassComponent } from './ClassComponent'
 import { MessagesComp } from './MessagesComp'
 import { NoResultsComp } from './NoResultsComp'
 import { PagingComp } from './PagingComp'
 import { ProgressComp } from './ProgressComp'
 import { data } from '../data/data'
-import { formatPrice } from '../util/NumberUtil'
 import { get } from '../util/MithrilUtil'
 
 export interface IResultsCompAttrs { }
@@ -45,15 +45,7 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 											</div>
 											<br />
 											<p>
-												<button
-													type="button"
-													class="btn btn-success"
-												>
-													{get(() => volume.saleInfo.retailPrice) &&
-														formatPrice(volume.saleInfo.retailPrice.amount, volume.saleInfo.retailPrice.currencyCode) + ` – `
-													}
-													Add to cart
-											</button>
+												<AddToCartButtonComp _volume={volume}/>
 											</p>
 										</div>
 									)),
