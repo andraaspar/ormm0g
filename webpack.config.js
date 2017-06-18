@@ -5,6 +5,7 @@ const { CheckerPlugin } = require('awesome-typescript-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const extractLess = new ExtractTextPlugin({
 	filename: '[name].[contenthash].css',
@@ -44,6 +45,7 @@ module.exports = {
 		]
 	},
 	plugins: [
+		// new BundleAnalyzerPlugin(),
 		new CleanWebpackPlugin(['build']),
 		new CheckerPlugin(),
 		new HtmlWebpackPlugin({
@@ -60,6 +62,7 @@ module.exports = {
 		// CommonChunksPlugin will now extract all the common modules from vendor and main bundles
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'manifest', // But since there are no more common modules between them we end up with just the runtime code included in the manifest file
-		})
+		}),
+		new webpack.optimize.UglifyJsPlugin(),
 	],
 }

@@ -23,11 +23,14 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
     "typescript": "^2.3.4",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-bundle-analyzer": "^2.8.2"
   },
   "scripts": {
     "installDeps": "yarn && cd src/less && yarn && cd ../ts && yarn && cd ../..",
+    "start": "node .",
     "compile": "yarn run installDeps && webpack --display-modules --display-chunks",
-    "watch": "yarn run installDeps && webpack --watch --progress"
+    "debug": "yarn run installDeps && webpack --config webpack.debug.config.js",
+    "watch": "yarn run installDeps && webpack --watch --progress --config webpack.debug.config.js"
   }
 }
