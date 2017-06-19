@@ -39,9 +39,12 @@ export function handleXhrError(xhr: XMLHttpRequest, messages: string[], e: any) 
 }
 
 function config(saveXhr: ISaveXhr, xhr: XMLHttpRequest) {
-	if (window.XDomainRequest) {
-		xhr = new XDomainRequest()
-	}
+	// XDomainRequest requires HTTPS to make a connection to a HTTPS site.
+	// Google Books requires HTTPS, so commenting this out for now.
+	
+	// if (window.XDomainRequest) {
+	// 	xhr = new XDomainRequest()
+	// }
 	if (saveXhr) {
 		saveXhr(xhr)
 	}
