@@ -9,6 +9,7 @@ import { NoResultsComp } from './NoResultsComp'
 import { PagingComp } from './PagingComp'
 import { ProgressComp } from './ProgressComp'
 import { data } from '../data/data'
+import { formatNumber } from '../util/NumberUtil'
 import { get } from '../util/MithrilUtil'
 
 export interface IResultsCompAttrs { }
@@ -31,7 +32,7 @@ export class ResultsComp extends ClassComponent<IResultsCompAttrs> {
 						(data.search.response ?
 							(data.search.response.totalItems ?
 								[
-									(<p>Results: {data.search.response.totalItems}</p>),
+									(<p>Results: {formatNumber(data.search.response.totalItems)}</p>),
 									get(() => !!data.search.response.items.length) &&
 									data.search.response.items.map(volume => (
 										<div class="well">
