@@ -2,6 +2,7 @@ import * as m from 'mithril'
 
 import { ResponseSearchVolumes } from '../data/ResponseSearchVolumes'
 import { Volume } from '../data/Volume'
+import { get } from '../util/MithrilUtil'
 
 const BOOKS_API_KEY = 'AIzaSyDwAWEmy2ceP3gYWWtP3h2Ve0weiXZfY9k'
 
@@ -30,6 +31,6 @@ export function booksServerGetVolume(volumeId: string, projection: 'full' | 'lit
 }
 
 export function handleXhrError(xhr: XMLHttpRequest, messages: string[], e: any) {
-	messages.push(`Error while loading data: ${xhr.status} ${xhr.statusText} – ${e}. Check your connection and try again.`)
+	messages.push(`Error while loading data: ${get(() => xhr.status)} ${get(() => xhr.statusText)} – ${e}. Check your connection and try again.`)
 	console.error(e)
 }
