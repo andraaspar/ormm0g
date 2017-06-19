@@ -23,7 +23,7 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<a href="#" class="navbar-brand">{SITE_TITLE}</a>
+						<a href="#!/" class="navbar-brand">{SITE_TITLE}</a>
 					</div>
 					<div class="navbar-right">
 						<div class="navbar-form" role="search">
