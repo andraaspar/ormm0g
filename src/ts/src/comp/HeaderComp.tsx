@@ -57,6 +57,8 @@ export class HeaderComp extends ClassComponent<IHeaderCompAttrs> {
 								>
 									<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 									{' '}
+									{'Shopping cart'}
+									{' '}
 									<span class="badge">{getCartItemQuantitiesSum()}</span>
 								</a>
 							</li>
